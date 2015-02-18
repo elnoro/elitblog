@@ -15,7 +15,7 @@ class m150218_173954_create_users_table extends CDbMigration
 			'first_name' => 'Админ',
 			'second_name' => 'Админ',
 			'login' => 'admin',
-			'password' => password_hash('admin', PASSWORD_DEFAULT),
+			'password' => CPasswordHelper::hashPassword('admin'),
 		]);
 	}
 
