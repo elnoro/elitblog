@@ -12,6 +12,8 @@
  */
 class User extends CActiveRecord
 {
+	const ADMIN_LOGIN = 'admin';
+
 	/**
 	 * @return string the associated database table name
 	 */
