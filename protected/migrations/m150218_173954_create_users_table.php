@@ -11,6 +11,7 @@ class m150218_173954_create_users_table extends CDbMigration
 			'login' => 'string NOT NULL COMMENT "Логин"',
 			'password' => 'string NOT NULL COMMENT "Пароль"',
 		]);
+		$this->createIndex('user_login_index', 'User', 'login', true);
 		$this->insert('User', [
 			'first_name' => 'Админ',
 			'second_name' => 'Админ',
