@@ -1,2 +1,4 @@
 .vagrant
 Vagrantfile
+protected/config/database.php
+assets
