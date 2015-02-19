@@ -21,8 +21,7 @@ class UserController extends Controller
 
 	public function filterAdminOnly($filterChain)
 	{
-		$user = User::model()->findByPk(Yii::app()->user->id);
-		if (!empty($user) and $user->login === User::ADMIN_LOGIN) {
+		if (!Yii::app()->user->isGuest and Yii::app()->user->profile->isAdmin) {
 			$filterChain->run();
 		}
 		else throw new CHttpException(403);
