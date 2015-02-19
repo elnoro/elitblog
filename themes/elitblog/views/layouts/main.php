@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Elit Blog</title>
+    <title><?= Yii::app()->name ?></title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -39,24 +39,20 @@
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">Main page</a>
+                <a class="navbar-brand" href="<?= Yii::app()->createUrl('site/login') ?>"><?= Yii::app()->user->isGuest ? 'Вход' : Yii::app()->user->profile->first_name ?></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="">Posts</a>
+                        <a href="<?= Yii::app()->createUrl('post/index') ?>">Posts</a>
                     </li>
+                    <?php if (!Yii::app()->user->isGuest and Yii::app()->user->profile->isAdmin): ?>
                     <li>
-                        <a href="">Users</a>
+                        <a href="<?= Yii::app()->createUrl('user/admin') ?>">Users</a>
                     </li>
+                    <?php endif ?>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -71,9 +67,9 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="site-heading">
-                        <h1>Elit Blog</h1>
+                        <h1><?= Yii::app()->name ?></h1>
                         <hr class="small">
-                        <span class="subheading">A sample blog</span>
+                        <span class="subheading">Пример блога</span>
                     </div>
                 </div>
             </div>
@@ -91,7 +87,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <p class="copyright text-muted">Copyright &copy; Your Website 2014</p>
+                    <p class="copyright text-muted">Copyright &copy; <?= Yii::app()->name ?> <?= CTimestamp::formatDate('Y') ?></p>
                 </div>
             </div>
         </div>
