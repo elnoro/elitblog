@@ -36,7 +36,7 @@ class User extends CActiveRecord
 			array('first_name, second_name, login, password', 'length', 'max'=>255),
 			['login', 'unique'],
 			['passwordValue', 'required', 'on' => 'create'],
-			// ['passwordValue', 'match', 'pattern' => '^(?=.*[a-zA-Z])(?=.*[0-9]).{5,}$'],
+			['passwordValue', 'match', 'pattern' => '/^(?=.*[a-zA-Z])(?=.*[0-9]).{5,}$/'],
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, first_name, second_name, login', 'safe', 'on'=>'search'),
