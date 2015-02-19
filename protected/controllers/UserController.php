@@ -49,16 +49,28 @@ class UserController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['User']))
-		{
-			$model->attributes=$_POST['User'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
-
+		$this->processUser($model);
 		$this->conditionalRender('create',array(
 			'model'=>$model,
 		));
+	}
+
+	public function processUser(User $model)
+	{
+		if(isset($_POST['User']))
+		{
+			$model->attributes=$_POST['User'];
+			if($model->save()) {
+				if (Yii::app()->request->isAjaxRequest) {
+					$this->renderPartial('success');
+					Yii::app()->end();
+				}
+				else {
+					$this->redirect(array('view','id'=>$model->id));
+				}
+			}
+		}
+
 	}
 
 	/**
@@ -73,13 +85,7 @@ class UserController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['User']))
-		{
-			$model->attributes=$_POST['User'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
-
+		$this->processUser($model);
 		$this->conditionalRender('update',array(
 			'model'=>$model,
 		));
@@ -144,7 +150,7 @@ class UserController extends Controller
 
 	public function conditionalRender($view, $params = [])
 	{
-		$renderMethod = isset($this->getActionParams()['ajax']) ? 'renderPartial' : 'render';
+		$renderMethod = Yii::app()->request->isAjaxRequest ? 'renderPartial' : 'render';
 		$this->$renderMethod($view, $params);
 	}
 }
