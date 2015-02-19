@@ -83,11 +83,14 @@ class Post extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('text',$this->text,true);
-		$criteria->compare('date',$this->date,true);
 
 		$criteria->with = ['author'];
 		$criteria->compare('author.first_name', $this->author_id, true);
 		$criteria->compare('author.second_name', $this->author_id, true, 'OR');
+
+		if (isset($_GET['from_date']) and isset($_GET['to_date'])) {
+			$criteria->addBetweenCondition('date', $_GET['from_date'], $_GET['to_date']);
+		}
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
