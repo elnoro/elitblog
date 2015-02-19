@@ -100,24 +100,6 @@ class UserController extends Controller
 	}
 
 	/**
-	 * Lists all models.
-	 */
-	public function actionIndex()
-	{
-		$model = new User('search');
-        $model->unsetAttributes(); // clear any default values
-		if (isset($this->getActionParams()['User'])) {
-	        $model->attributes = $this->getActionParams()['User'];
-		}
-        $dp = $model->search();
-        $dp->pagination = ['pageSize' => 5];
-		$this->render('index',array(
-			'dataProvider'=> $dp,
-			'model'=>$model,
-		));
-	}
-
-	/**
 	 * Manages all models.
 	 */
 	public function actionAdmin()
