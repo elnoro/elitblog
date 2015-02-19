@@ -24,7 +24,7 @@ class UserController extends Controller
 		if (!Yii::app()->user->isGuest and Yii::app()->user->profile->isAdmin) {
 			$filterChain->run();
 		}
-		else throw new CHttpException(403);
+		else throw new CHttpException(403, 'Только администратор имеет доступ к этой странице');
 	}
 
 	/**
