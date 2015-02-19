@@ -28,8 +28,6 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-    <?php Yii::app()->getClientScript()->registerCoreScript( 'jquery.ui' ); ?>
 </head>
 
 <body>
@@ -46,11 +44,11 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="<?= Yii::app()->createUrl('post/index') ?>">Posts</a>
+                        <a href="<?= Yii::app()->createUrl('post/index') ?>">Посты</a>
                     </li>
                     <?php if (!Yii::app()->user->isGuest and Yii::app()->user->profile->isAdmin): ?>
                     <li>
-                        <a href="<?= Yii::app()->createUrl('user/admin') ?>">Users</a>
+                        <a href="<?= Yii::app()->createUrl('user/admin') ?>">Пользователи</a>
                     </li>
                     <?php endif ?>
                 </ul>
