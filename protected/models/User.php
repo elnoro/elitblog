@@ -14,8 +14,6 @@ class User extends CActiveRecord
 {
 	public $passwordValue = '';
 
-	const ADMIN_LOGIN = 'admin';
-
 	/**
 	 * @return string the associated database table name
 	 */
@@ -108,5 +106,10 @@ class User extends CActiveRecord
 	public function getFullName()
 	{
 		return $this->first_name . ' ' . $this->second_name;
+	}
+
+	public function getIsAdmin()
+	{
+		return $this->login === 'admin';
 	}
 }

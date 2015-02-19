@@ -15,8 +15,24 @@ class PostController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
+			'ownership + update, delete',
 			'postOnly + delete', // we only allow deletion via POST request
 		);
+	}
+
+	public function filterOwnership($filterChain)
+	{
+		if (Yii::app()->user->profile->isAdmin or
+			($this->loadModel($this->actionParams['id'])->author_id == 
+			Yii::app()->user->profile->id)
+		) {
+			$filterChain->run();
+		}
+		else {
+			throw new CHttpException(403, 'Вы не можете совершать действия с этим постом');
+			
+		}
+
 	}
 
 	/**
@@ -32,12 +48,8 @@ class PostController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update', 'delete'),
 				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('delete'),
-				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
