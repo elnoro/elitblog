@@ -57,7 +57,7 @@ class UserController extends Controller
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
-		$this->render('create',array(
+		$this->conditionalRender('create',array(
 			'model'=>$model,
 		));
 	}
@@ -81,7 +81,7 @@ class UserController extends Controller
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
-		$this->render('update',array(
+		$this->conditionalRender('update',array(
 			'model'=>$model,
 		));
 	}
@@ -159,5 +159,11 @@ class UserController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+
+	public function conditionalRender($view, $params = [])
+	{
+		$renderMethod = isset($this->getActionParams()['ajax']) ? 'renderPartial' : 'render';
+		$this->$renderMethod($view, $params);
 	}
 }
