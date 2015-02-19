@@ -12,6 +12,8 @@
  */
 class User extends CActiveRecord
 {
+	public $passwordValue = '';
+
 	const ADMIN_LOGIN = 'admin';
 
 	/**
@@ -32,20 +34,12 @@ class User extends CActiveRecord
 		return array(
 			array('first_name, second_name, login, password', 'required'),
 			array('first_name, second_name, login, password', 'length', 'max'=>255),
+			['login', 'unique'],
+			['passwordValue', 'required', 'on' => 'create'],
+			// ['passwordValue', 'match', 'pattern' => '^(?=.*[a-zA-Z])(?=.*[0-9]).{5,}$'],
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, first_name, second_name, login, password', 'safe', 'on'=>'search'),
-		);
-	}
-
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
+			array('id, first_name, second_name, login', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -60,6 +54,7 @@ class User extends CActiveRecord
 			'second_name' => 'Фамилия',
 			'login' => 'Логин',
 			'password' => 'Пароль',
+			'passwordValue' => 'Пароль',
 		);
 	}
 
@@ -85,7 +80,6 @@ class User extends CActiveRecord
 		$criteria->compare('first_name',$this->first_name,true);
 		$criteria->compare('second_name',$this->second_name,true);
 		$criteria->compare('login',$this->login,true);
-		$criteria->compare('password',$this->password,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -101,5 +95,13 @@ class User extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+
+	public function beforeValidate()
+	{
+		if (!empty($this->passwordValue)) {
+			$this->password = CPasswordHelper::hashPassword($this->passwordValue);
+		}
+		return parent::beforeValidate();
 	}
 }

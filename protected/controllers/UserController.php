@@ -45,7 +45,7 @@ class UserController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new User;
+		$model=new User('create');
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -107,9 +107,13 @@ class UserController extends Controller
 	{
 		$model = new User('search');
         $model->unsetAttributes(); // clear any default values
-        $model->attributes = $this->getActionParams()['User'];
+		if (isset($this->getActionParams()['User'])) {
+	        $model->attributes = $this->getActionParams()['User'];
+		}
+        $dp = $model->search();
+        $dp->pagination = ['pageSize' => 5];
 		$this->render('index',array(
-			'dataProvider'=>$model->search(),
+			'dataProvider'=> $dp,
 			'model'=>$model,
 		));
 	}

@@ -1,4 +1,3 @@
-<div class="container">
 <?php
 $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider'=>$dataProvider,
@@ -9,4 +8,3 @@ $this->widget('zii.widgets.grid.CGridView', array(
     ]
 ));
 ?>
-</div>

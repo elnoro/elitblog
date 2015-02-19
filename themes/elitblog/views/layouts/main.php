@@ -80,8 +80,9 @@
     </header>
 
     <!-- Main Content -->
+    <div class="container">
     <?php echo $content ?>
-
+    </div>
     <hr>
 
     <!-- Footer -->
