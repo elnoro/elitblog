@@ -25,6 +25,5 @@ $this->menu=array(
 		'first_name',
 		'second_name',
 		'login',
-		'password',
 	),
 )); ?>
