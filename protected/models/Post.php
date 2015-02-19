@@ -82,9 +82,12 @@ class Post extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('author_id',$this->author_id);
 		$criteria->compare('text',$this->text,true);
 		$criteria->compare('date',$this->date,true);
+
+		$criteria->with = ['author'];
+		$criteria->compare('author.first_name', $this->author_id, true);
+		$criteria->compare('author.second_name', $this->author_id, true, 'OR');
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
