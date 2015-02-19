@@ -37,7 +37,16 @@
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
-                <a class="navbar-brand" href="<?= Yii::app()->createUrl('site/login') ?>"><?= Yii::app()->user->isGuest ? 'Вход' : Yii::app()->user->profile->first_name ?></a>
+                <?php if (Yii::app()->user->isGuest) {
+                    $authLinkData['route'] = 'login';
+                    $authLinkData['title'] = 'Вход';
+                }
+                else {
+                    $authLinkData['route'] = 'logout';
+                    $authLinkData['title'] = Yii::app()->user->profile->first_name;
+                }
+                ?>
+                <a class="navbar-brand" href="<?= Yii::app()->createUrl('site/' . $authLinkData['route']) ?>"><?= $authLinkData['title'] ?></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
